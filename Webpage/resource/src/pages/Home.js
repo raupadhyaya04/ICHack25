@@ -1,23 +1,19 @@
 // src/pages/Home.js
 import React from 'react';
 import Navbar from '../components/Navbar';
-import homeImage from '../assets/nodes_photo.png';
+import NetworkGraph from '../components/NetworkGraph';
 import '../app.css';
 
 export default function Home() {
   return (
     <div>
       <div className="header">
-        <h1 className="title">ReSource</h1>
+        <h1 className="title">ReSource</h1> 
         <Navbar />
       </div>
       <div className="home-container">
         <div className="home-image-section">
-          <img 
-            src={homeImage} 
-            alt="Food bank volunteers sorting donations"
-            className="home-image"
-          />
+          <NetworkGraph />
         </div>
         <div className="home-text-section">
           <h2>Connecting Surplus to Need</h2>
@@ -36,12 +32,8 @@ export default function Home() {
             reducing food waste.
           </p>
           <div className="cta-section">
-          <a href="/suppliers">
             <button className="cta-button">Join as a Supplier</button>
-          </a>
-          <a href="distributors">
             <button className="cta-button">Register as a Food Bank</button>
-          </a>
           </div>
         </div>
       </div>
