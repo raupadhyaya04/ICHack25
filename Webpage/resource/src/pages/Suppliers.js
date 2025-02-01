@@ -27,85 +27,86 @@ function Suppliers() {
     ];
   
     return (
-      <div className="distributors-page">
+      <div>
         <div className="header">
           <h1 className = 'title'>ReSource</h1>
           <Navbar />
         </div>
-        
-        <div className="dashboard-container">
-          {/* Left Column */}
-          <div className="left-column">
-            {/* Product Updates Section */}
-            <div className="product-updates">
-              <h2>Update Products</h2>
-              <form className="update-form">
-                <input 
-                  type="text" 
-                  placeholder="Product Name"
-                  value={productData.name}
-                  onChange={(e) => setProductData({...productData, name: e.target.value})}
-                />
-                <input 
-                  type="number" 
-                  placeholder="Quantity"
-                  value={productData.quantity}
-                  onChange={(e) => setProductData({...productData, quantity: e.target.value})}
-                />
-                <input 
-                  type="date" 
-                  value={productData.date}
-                  onChange={(e) => setProductData({...productData, date: e.target.value})}
-                />
-                <button type="submit">Update</button>
-              </form>
-            </div>
-  
-            {/* Statistics Section */}
-            <div className="statistics">
-              <h2>Impact Statistics</h2>
-              <div className="stats-grid">
-                <div className="stat-box">
-                  <h3>People Fed</h3>
-                  <p>{stats.peopleServed}</p>
-                  <small>*Based on 2kg per person estimate</small>
-                </div>
-                <div className="stat-box">
-                  <h3>Credits Generated</h3>
-                  <p>{stats.creditsGenerated}</p>
-                </div>
-                <div className="stat-box">
-                  <h3>Waste Saved</h3>
-                  <p>{stats.wasteSaved}</p>
-                </div>
-                <div className="stat-box">
-                  <h3>CO2 Savings</h3>
-                  <p>{stats.co2Savings}</p>
+        `<div className="distributors-page">
+          <div className="dashboard-container">
+            {/* Left Column */}
+            <div className="left-column">
+              {/* Product Updates Section */}
+              <div className="product-updates">
+                <h2>Update Products</h2>
+                <form className="update-form">
+                  <input 
+                    type="text" 
+                    placeholder="Product Name"
+                    value={productData.name}
+                    onChange={(e) => setProductData({...productData, name: e.target.value})}
+                  />
+                  <input 
+                    type="number" 
+                    placeholder="Quantity"
+                    value={productData.quantity}
+                    onChange={(e) => setProductData({...productData, quantity: e.target.value})}
+                  />
+                  <input 
+                    type="date" 
+                    value={productData.date}
+                    onChange={(e) => setProductData({...productData, date: e.target.value})}
+                  />
+                  <button type="submit">Update</button>
+                </form>
+              </div>
+    
+              {/* Statistics Section */}
+              <div className="statistics">
+                <h2>Impact Statistics</h2>
+                <div className="stats-grid">
+                  <div className="stat-box">
+                    <h3>People Fed</h3>
+                    <p>{stats.peopleServed}</p>
+                    <small>*Based on 2kg per person estimate</small>
+                  </div>
+                  <div className="stat-box">
+                    <h3>Credits Generated</h3>
+                    <p>{stats.creditsGenerated}</p>
+                  </div>
+                  <div className="stat-box">
+                    <h3>Waste Saved</h3>
+                    <p>{stats.wasteSaved}</p>
+                  </div>
+                  <div className="stat-box">
+                    <h3>CO2 Savings</h3>
+                    <p>{stats.co2Savings}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-  
-          {/* Right Column - Distributors Table */}
-          <div className="right-column">
-            <table className="distributors-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Capacity</th>
-                  <th>Window of Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                {distributors.map((distributor, index) => (
-                  <tr key={index}>
-                    <td>{distributor.name}</td>
-                    <td>{distributor.capacity}</td>
-                    <td>{distributor.window}</td>
+    
+            {/* Right Column - Distributors Table */}
+            <div className="right-column">
+              <table className="distributors-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Capacity</th>
+                    <th>Window of Time</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {distributors.map((distributor, index) => (
+                    <tr key={index}>
+                      <td>{distributor.name}</td>
+                      <td>{distributor.capacity}</td>
+                      <td>{distributor.window}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
