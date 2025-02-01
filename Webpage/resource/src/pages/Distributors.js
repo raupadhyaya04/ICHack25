@@ -42,10 +42,67 @@ const BreakdownTable = () => {
   );
 };
 
+const AppointmentCard = ({ appointment, onBook }) => {
+  const [isBooking, setIsBooking] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+
+  const handleBookClick = () => {
+    setIsBooking(true);
+  };
+
+  const handleConfirmBooking = () => {
+    onBook(appointment.id, quantity);
+    setIsBooking(false);
+    setQuantity(1);
+  };
+
+  const handleCancel = () => {
+    setIsBooking(false);
+    setQuantity(1);
+  };
+
+  return (
+    <div className="appointment-card">
+      <div className="appointment-details">
+        <p>Date: {appointment.date}</p>
+        <p>Time: {appointment.time}</p>
+        <p>Location: {appointment.location}</p>
+      </div>
+      {!isBooking ? (
+        <button
+          onClick={handleBookClick}
+          disabled={appointment.status === 'booked'}
+          className={`booking-button ${appointment.status === 'booked' ? 'booked' : ''}`}
+        >
+          {appointment.status === 'booked' ? 'Booked' : 'Book Now'}
+        </button>
+      ) : (
+        <div className="booking-form">
+          <input
+            type="number"
+            min="1"
+            value={quantity}
+            onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+            className="quantity-input"
+          />
+          <div className="booking-buttons">
+            <button onClick={handleConfirmBooking} className="confirm-button">
+              Confirm
+            </button>
+            <button onClick={handleCancel} className="cancel-button">
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const AppointmentsList = () => {
-  const handleBooking = (appointmentId) => {
-    // Implement booking logic here
-    console.log(`Booking appointment ${appointmentId}`);
+  const handleBooking = (appointmentId, quantity) => {
+    console.log(`Booking appointment ${appointmentId} with quantity ${quantity}`);
+    // Implement your booking logic here
   };
 
   return (
@@ -53,20 +110,11 @@ const AppointmentsList = () => {
       <h2>Available Appointments</h2>
       <div className="appointments-grid">
         {mockAppointments.map(appointment => (
-          <div key={appointment.id} className="appointment-card">
-            <div className="appointment-details">
-              <p>Date: {appointment.date}</p>
-              <p>Time: {appointment.time}</p>
-              <p>Location: {appointment.location}</p>
-            </div>
-            <button
-              onClick={() => handleBooking(appointment.id)}
-              disabled={appointment.status === 'booked'}
-              className={`booking-button ${appointment.status === 'booked' ? 'booked' : ''}`}
-            >
-              {appointment.status === 'booked' ? 'Booked' : 'Book Now'}
-            </button>
-          </div>
+          <AppointmentCard
+            key={appointment.id}
+            appointment={appointment}
+            onBook={handleBooking}
+          />
         ))}
       </div>
     </div>
