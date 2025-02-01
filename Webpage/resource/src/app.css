@@ -363,6 +363,15 @@ body {
   opacity: 0.7;
 }
 
+
+
+.home-image-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 0px;
+=======
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -421,4 +430,5 @@ body {
 .popup-buttons button:last-child {
   background-color: #f44336;
   color: white;
+
 }
