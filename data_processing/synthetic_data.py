@@ -1,71 +1,74 @@
 import numpy as np
-from scipy import stats
 import pandas as pd
 
 def get_data(filename):
     df = pd.read_csv(filename)
     return df
 
+# Expiration percentage per category
+daily_expiration_percentages = {
+    "Fresh Produce": 35,
+    "Dairy": 25,
+    "Meat and Fish": 20,
+    "Bakery": 15,
+    "Pantry Items": 4,
+    "Other": 1
+}
 
-# Assumption Constants
-supplier_mean__expiry = 4
-supplier_mean_product_expiry = 4
-supplier_mean_product_expiry = 4
-supplier_mean_product_expiry = 4
-supplier_mean_product_expiry = 4
-supplier_mean_product_expiry = 4
-supplier_mean_product_expiry = 4
-supplier_mean_product_expiry = 4
-supplier_mean_product_expiry = 4
+average_expiry_weight = 66  # kg per day (total)
+std_by_category = 10  # kg (total std for all categories)
 
-supplier_std_product_expiry = 10
+# Convert percentages into actual means (in kg)
+category_means = {
+    key: (value / 100) * average_expiry_weight
+    for key, value in daily_expiration_percentages.items()
+}
 
-distributer_mean_dc = 50
-distributer_std_dc = 50
+# Distribute std proportionally across categories
+total_percentage = sum(daily_expiration_percentages.values())  # Should be 100%
+category_stds = {
+    key: (value / total_percentage) * std_by_category
+    for key, value in daily_expiration_percentages.items()
+}
 
-# Supplier distribution (Erlang)
-# Erlang is a special case of Gamma distribution where shape parameter (k) is an integer
-# We need to calculate shape (k) and scale (θ) parameters from mean and std
-supplier_shape = int((supplier_mean_product_expiry ** 2) / (supplier_std_product_expiry ** 2))  # rounded to nearest integer
-supplier_scale = supplier_std_product_expiry ** 2 / supplier_mean_product_expiry
+def calculate_shape_and_scale(mean, std):
+    if std == 0:
+        raise ValueError("Standard deviation cannot be zero.")
 
-# Distributor distribution (Negative Binomial)
-# We need to calculate n and p parameters from mean and std
-# For negative binomial: mean = n(1-p)/p and variance = n(1-p)/p^2
-p = distributer_mean_dc / (distributer_std_dc ** 2)  # probability of success
-n = distributer_mean_dc * p / (1 - p)  # number of successes
+    supplier_shape = (mean ** 2) / (std ** 2)  # Shape parameter
+    supplier_scale = (std ** 2) / mean  # Scale parameter
 
-def generate_supplier_samples(size=1000):
-    """Generate samples from supplier's Erlang distribution"""
+    return supplier_shape, supplier_scale
+
+def generate_supplier_samples(size, mean, std):
+    supplier_shape, supplier_scale = calculate_shape_and_scale(mean, std)
     return np.random.gamma(supplier_shape, supplier_scale, size)
 
-def generate_distributer_samples(size=1000):
-    """Generate samples from distributor's Negative Binomial distribution"""
-    return np.random.negative_binomial(n, p, size)
+def get_distributions():
+    distributions = {}
 
-# Example usage:
+    for category, mean in category_means.items():
+        std = category_stds[category]  # Get standard deviation for this category
+        supplier_shape, supplier_scale = calculate_shape_and_scale(mean, std)
+        distributions[category] = np.random.gamma(supplier_shape, supplier_scale, 1000)
+
+    return distributions
+
+# Example usage
 if __name__ == "__main__":
-    # Generate some sample data
-    supplier_samples = generate_supplier_samples(1000)
-    distributer_samples = generate_distributer_samples(1000)
+
+    df = get_data('./data_processing/data.csv')
+    print(df.head(10))
+
+    '''
+    # Generate supplier samples for a specific category
+    fresh_produce_mean = category_means["Fresh Produce"]
+    fresh_produce_std = category_stds["Fresh Produce"]
+    supplier_samples = generate_supplier_samples(1000, fresh_produce_mean, fresh_produce_std)
     
-    # Print summary statistics
-    print("\nSupplier Distribution (Erlang):")
-    print(f"Target Mean: {supplier_mean_product_expiry}")
-    print(f"Actual Mean: {np.mean(supplier_samples):.2f}")
-    print(f"Target Std: {supplier_std_product_expiry}")
-    print(f"Actual Std: {np.std(supplier_samples):.2f}")
+    # Generate distributions for all categories
+    category_distributions = get_distributions()
     
-    print("\nDistributor Distribution (Negative Binomial):")
-    print(f"Target Mean: {distributer_mean_dc}")
-    print(f"Actual Mean: {np.mean(distributer_samples):.2f}")
-    print(f"Target Std: {distributer_std_dc}")
-    print(f"Actual Std: {np.std(distributer_samples):.2f}")
-
-
-    # Can we use local populations
-
-
-
-
-    
+    print("Sample from Fresh Produce:", supplier_samples[:5])
+    print("Generated distributions for all categories.")
+    '''

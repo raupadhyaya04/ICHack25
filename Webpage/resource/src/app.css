@@ -356,3 +356,12 @@ body {
 .booking-button:disabled {
   opacity: 0.7;
 }
+
+
+.home-image-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 0px;
+}
