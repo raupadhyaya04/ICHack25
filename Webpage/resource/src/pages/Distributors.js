@@ -16,6 +16,34 @@ const mockAppointments = [
   // Add more mock data as needed
 ];
 
+const BookingPopup = ({ isOpen, onClose, onConfirm, appointmentId }) => {
+  const [quantity, setQuantity] = useState(1);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="popup-overlay">
+      <div className="popup-content">
+        <h3>Book Appointment</h3>
+        <div className="quantity-selector">
+          <label htmlFor="quantity">Quantity:</label>
+          <input
+            type="number"
+            id="quantity"
+            min="1"
+            value={quantity}
+            onChange={(e) => setQuantity(parseInt(e.target.value))}
+          />
+        </div>
+        <div className="popup-buttons">
+          <button onClick={() => onConfirm(appointmentId, quantity)}>Confirm</button>
+          <button onClick={onClose}>Cancel</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const BreakdownTable = () => {
   return (
     <div className="breakdown-table">
@@ -100,9 +128,24 @@ const AppointmentCard = ({ appointment, onBook }) => {
 };
 
 const AppointmentsList = () => {
-  const handleBooking = (appointmentId, quantity) => {
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleBookingClick = (appointmentId) => {
+    setSelectedAppointment(appointmentId);
+    setIsPopupOpen(true);
+  };
+
+  const handleConfirmBooking = (appointmentId, quantity) => {
+    // Implement booking logic here
     console.log(`Booking appointment ${appointmentId} with quantity ${quantity}`);
-    // Implement your booking logic here
+    setIsPopupOpen(false);
+    setSelectedAppointment(null);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+    setSelectedAppointment(null);
   };
 
   return (
@@ -110,13 +153,29 @@ const AppointmentsList = () => {
       <h2>Available Appointments</h2>
       <div className="appointments-grid">
         {mockAppointments.map(appointment => (
-          <AppointmentCard
-            key={appointment.id}
-            appointment={appointment}
-            onBook={handleBooking}
-          />
+          <div key={appointment.id} className="appointment-card">
+            <div className="appointment-details">
+              <p>Date: {appointment.date}</p>
+              <p>Time: {appointment.time}</p>
+              <p>Location: {appointment.location}</p>
+            </div>
+            <button
+              onClick={() => handleBookingClick(appointment.id)}
+              disabled={appointment.status === 'booked'}
+              className={`booking-button ${appointment.status === 'booked' ? 'booked' : ''}`}
+            >
+              {appointment.status === 'booked' ? 'Booked' : 'Book Now'}
+            </button>
+          </div>
         ))}
       </div>
+
+      <BookingPopup
+        isOpen={isPopupOpen}
+        onClose={handleClosePopup}
+        onConfirm={handleConfirmBooking}
+        appointmentId={selectedAppointment}
+      />
     </div>
   );
 };
