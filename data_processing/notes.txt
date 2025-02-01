@@ -1,0 +1,40 @@
+I want to sample via a erlang distribution from the data in my df to create a mock time series for each day in the year. In my df I have the names of supermarkets and the average value of the excess supply that they have. I want to take the average price of produce to be 1.7789 and use this to calculate the weight from which I can sample via an erlang distribution to create the mock time series for each day of the year. I want to take six samples based on the product categories and average them. The product categories are distributed in the category info dict below.
+
+category_info = {
+    "Fresh Produce": {
+        "expiration_days": 4,
+        "daily_weight_kg": 20.0
+    },
+    "Dairy": {
+        "expiration_days": 7,
+        "daily_weight_kg": 15.0
+    },
+    "Meat and Fish": {
+        "expiration_days": 5,
+        "daily_weight_kg": 12.0
+    },
+    "Bakery": {
+        "expiration_days": 3,
+        "daily_weight_kg": 10.0
+    },
+    "Pantry Items": {
+        "expiration_days": 180,  # 6 months
+        "daily_weight_kg": 5.0
+    },
+    "Personal Care": {
+        "expiration_days": 365,  # 12 months
+        "daily_weight_kg": 0.21
+    },
+    "Cleaning Products": {
+        "expiration_days": 730,  # 24 months
+        "daily_weight_kg": 0.15
+    }
+}
+
+def get_data(filename):
+    df = pd.read_csv(filename)
+    df['excess'] = df['supply'] - df['demand']
+    new_df = df[['name', 'excess']].copy()
+    new_df['excess'] = new_df['excess'].clip(lower=0)
+    return new_df
+
