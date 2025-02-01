@@ -1,8 +1,23 @@
 import numpy as np
 from scipy import stats
+import pandas as pd
+
+def get_data(filename):
+    df = pd.read_csv(filename)
+    return df
+
 
 # Assumption Constants
+supplier_mean__expiry = 4
 supplier_mean_product_expiry = 4
+supplier_mean_product_expiry = 4
+supplier_mean_product_expiry = 4
+supplier_mean_product_expiry = 4
+supplier_mean_product_expiry = 4
+supplier_mean_product_expiry = 4
+supplier_mean_product_expiry = 4
+supplier_mean_product_expiry = 4
+
 supplier_std_product_expiry = 10
 
 distributer_mean_dc = 50
