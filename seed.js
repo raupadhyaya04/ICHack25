@@ -27,8 +27,8 @@ const seedTransactions = async () => {
     for (let i = 0; i < 100; i++) {
       const amount = parseFloat(faker.finance.amount(100, 1000, 2)); // random amount between 100 and 1000
       const newTransaction = new Transaction({
-        supplier: faker.company.name(),
-        distributor: faker.company.name(),
+        store: faker.company.name(),
+        foodBank: faker.company.name(),
         amount: amount,
         // Calculate resource units using a cost per unit of 7 (as in your statistics logic)
         resourceUnits: Math.floor(amount / 7),

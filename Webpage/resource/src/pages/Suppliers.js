@@ -121,7 +121,7 @@ function Suppliers() {
                 <tbody>
                   {distributors.map((distributor, index) => (
                     <tr key={index}>
-                      <td>{distributor.name}</td>
+                      <td>{distributor.name}</td> 
                       <td>{distributor.capacity}</td>
                       <td>{distributor.window}</td>
                     </tr>
