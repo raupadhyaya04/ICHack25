@@ -25,6 +25,11 @@ function Suppliers() {
       { name: "Community Center B", capacity: "500kg", window: "10AM - 3PM" },
       { name: "Charity C", capacity: "750kg", window: "8AM - 4PM" },
     ];
+
+    const creditStats = [
+      { Fact: "Your Waste Credit balance is: 20"},
+      { Fact: "Your Food Credits help millions of hungry people eat"}
+    ]
   
     return (
       <div>
@@ -85,9 +90,26 @@ function Suppliers() {
                 </div>
               </div>
             </div>
-    
-            {/* Right Column - Distributors Table */}
+
+            {/* Upper Right Column - Credit Stats Table */}
             <div className="right-column">
+                <table className="credStats-table">
+                  <thead>
+                    <tr>
+                      <th>Food Waste Credit Metrics</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {creditStats.map((creditStat, index) => (
+                      <tr key={index}>
+                        <div className="stat-box">
+                        <td>{creditStat.Fact}</td>
+                        </div>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+            {/* Lower Right Column - Distributors Table */}
               <table className="distributors-table">
                 <thead>
                   <tr>
