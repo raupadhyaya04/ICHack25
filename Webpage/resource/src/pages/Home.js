@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import NetworkGraph from '../components/NetworkGraph';
 import '../app.css';
 
-export default function Home() {
+export default function Home() { 
   return (
     <div>
       <div className="header">

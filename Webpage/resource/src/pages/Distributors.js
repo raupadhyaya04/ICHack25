@@ -183,7 +183,7 @@ const AppointmentsList = () => {
 export default function Distributors() {
   const [credits, setCredits] = useState(0);
 
-  return (
+  return ( 
     <div>
       <div className="header">
             <h1 className = 'title'>ReSource</h1>
