@@ -1,5 +1,12 @@
 {
-  "dependencies": {
+  "name": "your-project-name",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "your-dev-command",
+    "build": "your-build-command",
+    "start": "your-start-command"
+  },
+    "dependencies": {
     "@faker-js/faker": "^9.4.0",
     "csv-parser": "^3.2.0",
     "faker": "^6.6.6",
