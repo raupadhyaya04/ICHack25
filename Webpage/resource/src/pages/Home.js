@@ -32,8 +32,13 @@ export default function Home() {
             reducing food waste.
           </p>
           <div className="cta-section">
+            <a href="/suppliers">
             <button className="cta-button">Join as a Supplier</button>
+            </a>
+
+            <a href="/distributors">
             <button className="cta-button">Register as a Food Bank</button>
+            </a>
           </div>
         </div>
       </div>

@@ -140,6 +140,8 @@ body {
   }
 }
 
+/* Distributors Page: */
+
 .distributors-page {
   padding: 1.5rem;
 }
@@ -290,6 +292,7 @@ body {
   }
 }
 
+/*
 @media (max-width: 768px) {
   .stats-grid {
     grid-template-columns: 1fr;
@@ -299,6 +302,7 @@ body {
     padding: 1rem;
   }
 }
+*/
 
 /* Breakdown Table Styles */
 .breakdown-table {
@@ -323,6 +327,7 @@ body {
 .breakdown-table th {
   background-color: #f8f9fa;
   font-weight: 600;
+  margin-left: 0px;
 }
 
 /* Appointments List Styles */

@@ -27,8 +27,8 @@ function Suppliers() {
     ];
 
     const creditStats = [
-      { Fact: "Your Waste Credit balance is: 20"},
-      { Fact: "Your Food Credits help millions of hungry people eat"}
+      { Fact: "Your Waste Credit balance is: 20 Credits"},
+      { Fact: "Your Food Credits are helping millions of hungry people eat every day!"}
     ]
   
     return (
